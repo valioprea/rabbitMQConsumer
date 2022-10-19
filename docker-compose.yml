@@ -1,16 +1,22 @@
 version: "3.9"
 services:
-  consumer:
-    image: consumer
+  app:
+    build: .
+    container_name: consumer
     hostname: consumer
     ports:
       - "9001:9001"
   rabbitmq:
     image: rabbitmq:3.10-management
     hostname: rabbitmq
+    container_name: rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
+networks:
+    default:
+      name: queue
+      external: true
